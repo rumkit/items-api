@@ -23,3 +23,9 @@
 .items-table__wrapper {
   margin: 10px;
 }
+
+.notification__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

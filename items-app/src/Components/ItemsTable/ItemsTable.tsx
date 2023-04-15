@@ -3,11 +3,7 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button'
 import './ItemsTable.css'
 
-function ItemsTable(props: { items: Item[] }) {
-
-    const deleteButtonClick = (item: Item) => {
-        console.log(`item with id ${item.id} shall be deleted`);
-    }
+function ItemsTable(props: { items: Item[], deleteItemHandler: (item: Item) => void}) {
 
     const itemsRows = props.items
         .map((i, index) => <tr key={i.id}>
@@ -16,7 +12,7 @@ function ItemsTable(props: { items: Item[] }) {
             <td>{i.subItems.length}</td>
             <td>
                 <Button variant="info">Details</Button>
-                <Button variant="danger" onClick={() => deleteButtonClick(i)}>Delete</Button>
+                <Button variant="danger" onClick={() => props.deleteItemHandler(i)}>Delete</Button>
             </td>
         </tr>)
 
