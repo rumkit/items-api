@@ -1,10 +1,13 @@
 import { Item } from "../Models/Item"
 
-const url = "http://localhost:5000/Api/"
+const baseUrl = "http://localhost:5000/Api/"
 
-export const getItems = () => apiGet<Item[]>(url + "items");
+export const itemsApi = {
+    getItems : () => apiGet<Item[]>(baseUrl + "items"),
+    deleteItem : (item: Item) => api(baseUrl + `item?id=${item.id}`, { method: "DELETE" } ),
+    createItem : (subItemsCount: number) => api(baseUrl + `item?subItemsCount=${subItemsCount}`, { method: "POST" } )
+}
 
-export const deleteItem = (item: Item) => api(url + `item?id=${item.id}`, { method: "DELETE" } );
 
 function apiGet<T>(url: string): Promise<T> {
     return fetch(url)
