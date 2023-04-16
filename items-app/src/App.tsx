@@ -7,10 +7,12 @@ import ItemsTable from './Components/ItemsTable/ItemsTable';
 import Button from 'react-bootstrap/Button'
 import NotificationsContainer from './Components/NotificationsContainer/NotificationsContainer';
 import DeleteItemModal from './Components/DeleteItemModal/DeleteItemModal';
+import CreateItemModal from './Components/CreateItemModal/CreateItemModal';
 
 function App() {
   const [items, setItems] = useState<Item[]>();
-  const [modalVisible, setModalVisible] = useState<boolean>();
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>();
+  const [showCreateModal, setShowCreateModal] = useState<boolean>();
   const [currentItem, setCurrentItem] = useState<Item>();
   const [notifications, setNotifications] = useState<Notification[]>();
 
@@ -22,11 +24,11 @@ function App() {
 
   const onItemDeleted = (item: Item) => {
     setCurrentItem(item);
-    setModalVisible(true);
+    setShowDeleteModal(true);
   }
 
   const onItemDeleteConfirmed = (item: Item | undefined) => {
-    setModalVisible(false);
+    setShowDeleteModal(false);
     if (item) {
       deleteItem(item)
         .then(_ => { 
@@ -58,14 +60,15 @@ function App() {
             <img className="brand__logo" src={"items-logo.png"} alt="items-app" />
             <div className="brand__caption"><h2>Items App</h2></div>
           </div>
-          <Button variant="dark">New Item</Button>
+          <Button variant="dark" onClick={() => setShowCreateModal(true)}>New Item</Button>
         </div>
       </header>
       <Button onClick={()=>pushNotification("test","light")}>New Toast</Button>
       <div className="items-table__wrapper">
         <ItemsTable items={items ?? []} deleteItemHandler={onItemDeleted} />
       </div>
-      <DeleteItemModal show={modalVisible ?? false} item={currentItem ?? {} as Item} onClose={() => setModalVisible(false)} onConfirm={onItemDeleteConfirmed}/>
+      <DeleteItemModal show={showDeleteModal ?? false} item={currentItem ?? {} as Item} onClose={() => setShowDeleteModal(false)} onConfirm={onItemDeleteConfirmed}/>
+      <CreateItemModal show={showCreateModal ?? false} onClose={() => setShowCreateModal(false)} onConfirm={() => 1} />
     </>
   )
 }
