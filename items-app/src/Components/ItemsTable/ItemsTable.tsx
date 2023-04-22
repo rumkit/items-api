@@ -2,16 +2,22 @@ import { Item } from "../../Models/Item";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button'
 import './ItemsTable.css'
+import { useNavigate } from "react-router-dom";
 
 function ItemsTable(props: { items: Item[], deleteItemHandler: (item: Item) => void}) {
+    const navigate = useNavigate();
 
+    const detailsOnClick = (id: string) => {
+        navigate(`/item/${id}`)
+    }
+    
     const itemsRows = props.items
         .map((i, index) => <tr key={i.id}>
             <td>{index + 1}</td>
             <td>{i.id}</td>
             <td>{i.subItems.length}</td>
             <td>
-                <Button variant="info">Details</Button>
+                <Button variant="info" onClick={() => detailsOnClick(i.id)}>Details</Button>
                 <Button variant="danger" onClick={() => props.deleteItemHandler(i)}>Delete</Button>
             </td>
         </tr>)

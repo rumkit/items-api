@@ -3,6 +3,7 @@ import { Item } from "../Models/Item"
 const baseUrl = "http://localhost:5000/Api/"
 
 export const itemsApi = {
+    getItem : (id: string) => apiGet<Item>(baseUrl + `item?id=${id}`),
     getItems : () => apiGet<Item[]>(baseUrl + "items"),
     deleteItem : (item: Item) => api(baseUrl + `item?id=${item.id}`, { method: "DELETE" } ),
     createItem : (subItemsCount: number) => api(baseUrl + `item?subItemsCount=${subItemsCount}`, { method: "POST" } )
